@@ -1,0 +1,10 @@
+prefix=/usr/local
+libdir=/usr/local/lib
+includedir=/usr/local/include/ns3.20
+
+Name: libns3-bittorrent
+Description: ns-3 module ns3-bittorrent
+Version: 3.20
+Libs: -L${libdir} -Wl,-Bdynamic -lns3.20-bittorrent-debug
+Cflags: -I${includedir}
+Requires: libns3.20-core-debug libns3.20-internet-debug libns3.20-network-debug libns3.20-nix-vector-routing-debug libns3.20-point-to-point-debug libns3.20-topology-read-debug libns3.20-csma-debug libns3.20-applications-debug libns3.20-tap-bridge-debug
