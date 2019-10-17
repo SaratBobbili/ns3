@@ -75,7 +75,9 @@ namespace bittorrent {
     UniformVariable uv; \
     for (NodeContainer::Iterator it = affectedNodes.Begin (); it != affectedNodes.End (); ++it) \
       { \
-        Simulator::Schedule (MilliSeconds (time.GetMilliSeconds () + uv.GetInteger (0, time2.GetMilliSeconds () - time.GetMilliSeconds ())), function, dynamic_cast<type*> (PeekPointer ((*it)->GetApplication (0)))); \
+	EventId temp;\
+        temp = Simulator::Schedule (MilliSeconds (time.GetMilliSeconds () + uv.GetInteger (0, time2.GetMilliSeconds () - time.GetMilliSeconds ())), function, dynamic_cast<type*> (PeekPointer ((*it)->GetApplication (0)))); \
+	if(newpool) newleechers.push(temp);\
       } \
   }
 #endif
@@ -126,6 +128,7 @@ namespace bittorrent {
 
 Story::Story ()
 {
+  newpool = false;
   m_trackerAdded = false;
   m_randomSeedSet = false;
   m_btNodeCount = 0;
@@ -580,9 +583,9 @@ void Story::ReadAndScheduleStory (std::string filePath, uint32_t simulationDurat
       // <-- Step 2
 
       // Step 3: Get and schedule the action to perform
-
+      if(buffer == "newpool") newpool = true;
       lineBuffer >> buffer;
-
+      if(buffer != "init") newpool = false;
       if (client)
         {
           if (buffer == "join")
@@ -684,6 +687,7 @@ void Story::ReadAndScheduleStory (std::string filePath, uint32_t simulationDurat
               if (client)
                 {
                   SCHEDULE_CHAPTER_NOARGS (&BitTorrentVideoClient::StartApplication, BitTorrentVideoClient)
+		  
                 }
               else
                 {

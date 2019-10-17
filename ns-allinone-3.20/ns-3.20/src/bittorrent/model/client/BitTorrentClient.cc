@@ -45,6 +45,11 @@
 
 #include <cmath>
 
+//ImmovableRock
+#include "ns3/event-id.h"
+#include <map>
+#include <iterator>
+
 namespace ns3 {
 namespace bittorrent {
 
@@ -207,7 +212,7 @@ void BitTorrentClient::StartApplication ()
 
   // Step 3d: Fill up the rest of the bitfield so that the calculation of a completed download is easier
   uint8_t leftBits = 0;       // Step 3e depends on this and latter changes to it, do not remove if you don't also remove step 4e!
-
+  std::cout << m_torrent->HasTrailingPiece() << " " << m_torrent->GetNumberOfPieces () << std::endl;
   if (m_torrent->HasTrailingPiece ())
     {
       leftBits = 7 - ((m_torrent->GetNumberOfPieces () - 1) % 8);
@@ -296,7 +301,26 @@ void BitTorrentClient::StartApplication ()
     + " and auto-connect " + ( GetAutoConnect () ? "enabled" : "disabled"),
     true
     );
-
+#if 1
+  // ImmovableRock
+      //uint32_t minPiece,minPiecePeers;
+     // int count;
+      //minPiecePeers = 100000;
+      std::map<uint32_t, uint32_t> OneClub;	
+      OneClub=GlobalMetricsGatherer::GetInstance()->GetPieceCount();
+      //count = 0;
+      std::cout << "---------------- Piece distribution in the swarm ---------------------" << std::endl;
+      for(std::map<uint32_t,uint32_t>::iterator iter = OneClub.begin(); iter != OneClub.end() /*&& count < 1526*/; iter++/*count++*/){
+               /* if(iter->second <= minPiecePeers){
+			minPiecePeers = iter->second;
+			minPiece = iter->first;
+		}
+               */
+                std::cout << iter->first << "    " << iter->second << std::endl;
+      }
+      //std::cout << "Index of rarest Piece is " << minPiece << " with only " << minPiecePeers << std::endl;
+      std::cout << "--------------------------------------------------------------------------" << std::endl;
+#endif
   // Step 8: Finish initialization by issuing an ApplicationInitializedEvent
   ApplicationInitializedEvent ();
 }
@@ -836,11 +860,19 @@ void BitTorrentClient::DownloadCompleteEvent ()
     {
       (*iter)();
     }
-
+/*
+// Immovable Rock
+  if(!GlobalMetricsGatherer::GetInstance()->ReservePool.empty()){
+  EventId newLeecher = GlobalMetricsGatherer::GetInstance ()->ReservePool.front();
+  GlobalMetricsGatherer::GetInstance ()->ReservePool.pop();
+  Simulator::ScheduleNow(newLeecher.PeekEventImpl());
+  }
+*/
   if (m_seedingDuration.IsPositive ())
     {
       Simulator::Schedule (m_seedingDuration, &BitTorrentClient::DisconnectFromCloud, this);
     }
+
 }
 
 

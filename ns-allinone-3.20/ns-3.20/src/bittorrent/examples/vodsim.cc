@@ -42,6 +42,11 @@
 #include "ns3/mpi-interface.h"
 #endif
 
+
+//Immovable Rock
+#include<queue>
+#include"ns3/event-id.h"
+
 using namespace ns3;
 using namespace bittorrent;
 
@@ -147,6 +152,9 @@ int main (int argc, char *argv[])
   gatherer->SetFileNamePrefix (story->GetSimulationId (), story->GetLoggingToFile ());
   gatherer->RegisterWithApplications (nodeApplicationContainer);
   gatherer->AnnounceExternalClients (tapNodes.GetN ());
+// copying event ids of new pool to reserve pool in GlobalMetricsGatherer object
+  gatherer->ReservePool = story->newleechers; 
+std::cout<< "size of the reserve pool is " << gatherer->ReservePool.size() << std::endl;
 #ifndef BITTORRENT_EMULATION
   gatherer->SetStopFraction (1.0, 1.0);
 #else

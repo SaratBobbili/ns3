@@ -30,6 +30,10 @@
 #include "ns3/nstime.h"
 #include "ns3/simulator.h"
 
+// ImmovableRock
+#include "ns3/event-id.h"
+#include <queue>
+
 #include <string>
 #include <map>
 #include <set>
@@ -91,6 +95,11 @@ namespace bittorrent {
  */
 class Story : public Object
 {
+
+public:
+//ImmovableRock
+	std::queue<EventId> newleechers;
+	bool newpool;
 // Fields
 private:
   // Main settings for the story file

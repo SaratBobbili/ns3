@@ -27,6 +27,13 @@
 
 #include "ns3/application-container.h"
 
+
+
+// ImmovableRock
+#include<queue>
+#include "ns3/event-id.h"
+
+
 #include <map>
 
 namespace ns3 {
@@ -44,6 +51,11 @@ namespace bittorrent {
  */
 class GlobalMetricsGatherer
 {
+
+public:
+//ImmovableRock
+  std::queue<EventId> ReservePool;
+
 // Fields
 private:
   // The prefix for appended files
