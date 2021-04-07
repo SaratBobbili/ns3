@@ -71,7 +71,7 @@ The following is a sample config (referred to as story files by the VODSIM devel
 
 The above config simplifies setting up the ns-3 simulation without actually having to refactor the C++ code. It is important that one has a good understanding of the BitTorrent Specification to be able to create a custom config/story file since the story file abstract is based on the BitTorrent Standard.
 
-ns-3 simulator: please extract the Installation.zip file to your working directory.
+ns-3 simulator: please extract the installation files from Installation.zip to your working directory.
 Files of interest: ns-allinone-3.20/ns-3.20/src/bittorrent/*
 
 Everything that one needs to modify the protocol can be found under the above path. I would suggest going through the following files in addition to the BitTorrent Specificatin Wiki to get started.
