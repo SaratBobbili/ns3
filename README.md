@@ -81,8 +81,10 @@ Everything that one needs to modify the protocol can be found under the above pa
 4. ns-allinone-3.20/ns-3.20/src/bittorrent/model ( Source code for vanilla BitTorrent protocol e.g. tracker model, client model, piece selection strategy, choke-unchoke e.t.c)
 
 Other Misc links:
-https://laboratory.comsys.rwth-aachen.de/glebke/vodsim
-https://www.comsys.rwth-aachen.de/research/projects/vodsim
+https://laboratory.comsys.rwth-aachen.de/glebke/vodsim,
+
+https://www.comsys.rwth-aachen.de/research/projects/vodsim,
+
 https://dl.acm.org/doi/10.5555/2263019.2263073
 
 
